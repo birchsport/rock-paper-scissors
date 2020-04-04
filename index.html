@@ -9,8 +9,42 @@
   <body>
   </body>
   <script>
+    //Player Moves
+    let playerHand = prompt('Pick your destiny');
+    playerHand = normalize(playerHand);
+    play(playerHand);
+
+    function normalize(playerHand) {
+        let selectionLower = playerHand;
+        let selectionUpper = playerHand;
+        selectionLower = selectionLower.slice(1, playerHand.length)
+        selectionLower = selectionLower.toLowerCase();
+        selectionUpper = selectionUpper.charAt(0);
+        selectionUpper = selectionUpper.toUpperCase();
+    return selectionUpper + selectionLower;
+    }
+
+    function play(playerHand) {
+        if (playerHand === 'Rock') {
+            let playerSelection = 'Rock';
+            console.log('You threw ' + playerSelection + '!');
+        } else if (playerHand === 'Paper'){
+            let playerSelection = 'Paper';
+            console.log('You threw ' + playerSelection + '!');
+        } else if (playerHand === 'Scissors'){
+            let playerSelection = 'Scissors';
+            console.log('You threw ' + playerSelection + '!');
+        } else {
+            alert('Please enter your move, Rock, Paper, or Scissors')
+            let playerHand = prompt('Pick your destiny');
+            playerHand = normalize(playerHand);
+            play(playerHand);
+        }
+    }
+
     //Computer Moves
     let hands = ['Rock', 'Paper', 'Scissors'];
+    computerPlay(hands);
 
     function computerPlay(array) {
       let hand = array[random(array.length, 0)];
@@ -22,40 +56,7 @@
         return num
     }
 
-    computerPlay(hands);
-
-    //Player Moves
-    const playerHand = prompt("Let's play Rock Paper Scissors!");
-
-    function normalize(playerHand) {
-        let selectionLower = playerHand;
-        let selectionUpper = playerHand;
-        selectionLower = selectionLower.slice(1, playerHand.length)
-        selectionLower = selectionLower.toLowerCase();
-        selectionUpper = selectionUpper.charAt(0);
-        selectionUpper = selectionUpper.toUpperCase();
-    return selectionUpper + selectionLower;
-    }
-    
-    normalize(playerHand);
-
-    let play = function(playerHand) {
-        if (playerHand === 'Rock') {
-            let playerSelection = 'Rock';
-        } else if (playerHand === 'Paper'){
-            let playerSelection = 'Paper';
-        } else if (playerHand === 'Scissors'){
-            let playerSelection = 'Scissors';
-        } else {
-            prompt("Rock Paper Scissors! Please enter rock paper or scissors");
-            play(playerHand);
-        }
-    }
-
-    let playerSelection = playerHand;
-
     function playRound(playerSelection, computerSelection) {
-        
     }
 
     const computerSelection = computerPlay()
