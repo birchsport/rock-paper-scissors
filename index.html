@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Console Based Rock-Paper-Scissors</title>
+    <style>
+    </style>
+  </head>
+  <body>
+  </body>
+  <script>
+    //Computer Moves
+    let hands = ['Rock', 'Paper', 'Scissors'];
+
+    function computerPlay(array) {
+      let hand = array[random(array.length, 0)];
+      return hand;
+    }
+
+    function random(upper, lower) {
+        let num = Math.floor(Math.random() * (upper - lower) + lower);
+        return num
+    }
+
+    computerPlay(hands);
+
+    //Player Moves
+    const playerHand = prompt("Let's play Rock Paper Scissors!");
+
+    function normalize(playerHand) {
+        let selectionLower = playerHand;
+        let selectionUpper = playerHand;
+        selectionLower = selectionLower.slice(1, playerHand.length)
+        selectionLower = selectionLower.toLowerCase();
+        selectionUpper = selectionUpper.charAt(0);
+        selectionUpper = selectionUpper.toUpperCase();
+    return selectionUpper + selectionLower;
+    }
+    
+    normalize(playerHand);
+
+    let play = function(playerHand) {
+        if (playerHand === 'Rock') {
+            let playerSelection = 'Rock';
+        } else if (playerHand === 'Paper'){
+            let playerSelection = 'Paper';
+        } else if (playerHand === 'Scissors'){
+            let playerSelection = 'Scissors';
+        } else {
+            prompt("Rock Paper Scissors! Please enter rock paper or scissors");
+            play(playerHand);
+        }
+    }
+
+    let playerSelection = playerHand;
+
+    function playRound(playerSelection, computerSelection) {
+        
+    }
+
+    const computerSelection = computerPlay()
+    console.log(playRound(playerSelection, computerSelection))
+
+
+  </script>
+</html>
