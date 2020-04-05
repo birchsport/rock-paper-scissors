@@ -85,10 +85,26 @@ function game(playerSelection, computerSelection) {
     console.log ('Your score is ' + playerScore + '! The Computer score is ' + computerScore + '! ');
 }
 
+function gameRecap(playerScore, computerScore){
+    if (playerScore > computerScore) {
+        if (playerScore >= scoreLimit) {
+            console.log("You're the winner! Congratulations and thank you for playing!")
+        } else {
+        }
+    } else if (computerScore > playerScore) {
+        if (computerScore >= scoreLimit) {
+            console.log("You lost, try again tomorrow...")
+        } else {
+        }
+    } else {
+    }
+}
+
 let rounds;
 scoreLimit = prompt('Let\'s play Rock Paper Scissors! Please choose what score you want to play to! ')
 for (playerScore = 0, computerScore = 0, rounds = 1; playerScore < scoreLimit && computerScore < scoreLimit; rounds++) {
     console.log ('Rock Paper Scissors round #' + rounds + '! ');
-    game(playerSelection, computerSelection);;
+    game(playerSelection, computerSelection);
+    gameRecap(playerScore, computerScore);
 }
 
