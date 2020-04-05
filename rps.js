@@ -4,7 +4,12 @@ let playerScore = 0;
 let computerSelection;
 let computerScore = 0;
 let hands = ['Rock', 'Paper', 'Scissors'];
+let rounds;
 let scoreLimit;
+
+do{
+    scoreLimit = parseInt(prompt('Let\'s play Rock Paper Scissors! Please choose what score you want to play to! ', '5'), 10);
+}while(isNaN(scoreLimit) || scoreLimit > 1000000000 || scoreLimit < 1);
 
 //Basic Functions
 function random(upper, lower) {
@@ -45,7 +50,9 @@ function computerPlay(array) {
     return hand;
 }
 
-//Play the game.
+//Game functionality.
+
+
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === "Rock" && computerSelection === "Rock") {
         return 'You tied! Better luck next time!';
@@ -100,8 +107,6 @@ function gameRecap(playerScore, computerScore){
     }
 }
 
-let rounds;
-scoreLimit = prompt('Let\'s play Rock Paper Scissors! Please choose what score you want to play to! ')
 for (playerScore = 0, computerScore = 0, rounds = 1; playerScore < scoreLimit && computerScore < scoreLimit; rounds++) {
     console.log ('Rock Paper Scissors round #' + rounds + '! ');
     game(playerSelection, computerSelection);
