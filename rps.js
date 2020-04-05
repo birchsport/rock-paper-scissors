@@ -1,6 +1,8 @@
 //Initialized variables
 let playerSelection;
+let playerScore = 0;
 let computerSelection;
+let computerScore = 0;
 let hands = ['Rock', 'Paper', 'Scissors'];
 
 //Basic Functions
@@ -9,10 +11,10 @@ function random(upper, lower) {
     return num
 }
 
-function normalize(input) {
-    let selectionLower = input;
-    let selectionUpper = input;
-    selectionLower = selectionLower.slice(1, input.length)
+function normalize(playerHand) {
+    let selectionLower = playerHand;
+    let selectionUpper = playerHand;
+    selectionLower = selectionLower.slice(1, playerHand.length)
     selectionLower = selectionLower.toLowerCase();
     selectionUpper = selectionUpper.charAt(0);
     selectionUpper = selectionUpper.toUpperCase();
@@ -32,9 +34,7 @@ function play(playerHand) {
         console.log('You threw ' + playerSelection + '!');
     } else {
         alert('Please enter your move, Rock, Paper, or Scissors')
-        let playerHand = prompt('Pick your destiny');
-        playerHand = normalize(playerHand);
-        play(playerHand);
+        game(playerSelection, computerSelection);
     }
 }
 
@@ -49,20 +49,26 @@ function playRound(playerSelection, computerSelection) {
     if (playerSelection === "Rock" && computerSelection === "Rock") {
         return 'You tied! Better luck next time!';
     } else if (playerSelection === "Rock" && computerSelection === "Paper") {
+        computerScore++;
         return 'You LOST! Oh the SHAME!!!';
     } else if (playerSelection === "Rock" && computerSelection === "Scissors") {
+        playerScore++;
         return 'You won, this time...';
     } else if (playerSelection === "Paper" && computerSelection === "Paper") {
         return 'You tied!';
     } else if (playerSelection === "Paper" && computerSelection === "Rock") {
+        playerScore++;
         return 'You won, this time...';
     } else if (playerSelection === "Paper" && computerSelection === "Scissors") {
+        computerScore++;
         return 'You LOST! Oh the SHAME!!!';
     } else if (playerSelection === "Scissors" && computerSelection === "Scissors") {
         return 'You tied!';
     } else if (playerSelection === "Scissors" && computerSelection === "Rock") {
+        computerScore++;
         return 'You LOST! Oh the SHAME!!!';
     } else if (playerSelection === "Scissors" && computerSelection === "Paper") {
+        playerScore++;
         return 'You won, this time...';
     } 
 }
@@ -75,6 +81,7 @@ function game(playerSelection, computerSelection) {
     computerPlay(hands);
     computerSelection = computerPlay(hands)
     console.log(playRound(playerSelection, computerSelection));
+    console.log ('Your score is ' + playerScore + '! The Computer score is ' + computerScore + '! ');
 }
 
 game(playerSelection, computerSelection);
