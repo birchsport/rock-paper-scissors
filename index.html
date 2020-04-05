@@ -9,11 +9,10 @@
   <body>
   </body>
   <script>
+    let playerSelection;
+    let computerSelection;
+    
     //Player Moves
-    let playerHand = prompt('Pick your destiny');
-    playerHand = normalize(playerHand);
-    play(playerHand);
-
     function normalize(playerHand) {
         let selectionLower = playerHand;
         let selectionUpper = playerHand;
@@ -56,6 +55,7 @@
         return num
     }
 
+    //Play the game.
     function playRound(playerSelection, computerSelection) {
         if (playerSelection === "Rock" && computerSelection === "Rock") {
             return 'You tied! Better luck next time!';
@@ -78,32 +78,20 @@
         } 
     }
     
-    playerSelection = playerHand;
-    let computerSelection = computerPlay(hands)
     function game(playerSelection, computerSelection) {
-        console.log(playRound(playerSelection, computerSelection));
         playerHand = prompt('Pick your destiny');
         playerHand = normalize(playerHand);
         play(playerHand);
+        playerSelection = playerHand;
         computerPlay(hands);
-        console.log(playRound(playerSelection, computerSelection));
-        playerHand = prompt('Pick your destiny');
-        playerHand = normalize(playerHand);
-        play(playerHand);
-        computerPlay(hands);
-        console.log(playRound(playerSelection, computerSelection));
-        playerHand = prompt('Pick your destiny');
-        playerHand = normalize(playerHand);
-        play(playerHand);
-        computerPlay(hands);
-        console.log(playRound(playerSelection, computerSelection));
-        playerHand = prompt('Pick your destiny');
-        playerHand = normalize(playerHand);
-        play(playerHand);
-        computerPlay(hands);
+        computerSelection = computerPlay(hands)
         console.log(playRound(playerSelection, computerSelection));
     }
 
+    game(playerSelection, computerSelection);
+    game(playerSelection, computerSelection);
+    game(playerSelection, computerSelection);
+    game(playerSelection, computerSelection);
     game(playerSelection, computerSelection);
   </script>
 </html>
