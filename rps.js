@@ -3,15 +3,13 @@ let playerSelection;
 let playerScore = 0;
 let computerSelection;
 let computerScore = 0;
+const scoreLimit = 5;
 let hands = ['Rock', 'Paper', 'Scissors'];
-let rounds;
-let scoreLimit;
-
-function setScoreLimit(){
-    do{
-        scoreLimit = parseInt(prompt('Let\'s play Rock Paper Scissors! Please choose what score you want to play to! ', '5'), 10);
-    }while(isNaN(scoreLimit) || scoreLimit > 1000000000 || scoreLimit < 1);
-}
+let round = 0;
+let game = 1;
+let totalRounds = 0;
+let gamesLost = 0;
+let gamesWon = 0;
 
 //Basic Functions
 function random(upper, lower) {
@@ -27,6 +25,11 @@ function normalize(playerHand) {
     selectionUpper = selectionUpper.charAt(0);
     selectionUpper = selectionUpper.toUpperCase();
     return selectionUpper + selectionLower;
+}
+
+function resetScore(){
+    playerScore = 0;
+    computerScore = 0;
 }
 
 //Player Moves
@@ -53,8 +56,6 @@ function computerPlay(array) {
 }
 
 //Game functionality.
-
-
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === "Rock" && computerSelection === "Rock") {
         return 'You tied! Better luck next time!';
@@ -83,70 +84,33 @@ function playRound(playerSelection, computerSelection) {
     } 
 }
     
-function game(playerSelection, computerSelection) {
-    playerHand = prompt('Pick your destiny');
-    playerHand = normalize(playerHand);
-    play(playerHand);
-    playerSelection = playerHand;
+function guiPlayRound(playerSelection, computerSelection) {
     computerPlay(hands);
     computerSelection = computerPlay(hands)
-    console.log(playRound(playerSelection, computerSelection));
-    console.log ('Your score is ' + playerScore + '! The Computer score is ' + computerScore + '! ');
-}
-
-function guiGame(playerSelection, computerSelection) {
-    computerPlay(hands);
-    computerSelection = computerPlay(hands)
-    console.log(playRound(playerSelection, computerSelection));
-    console.log ('Your score is ' + playerScore + '! The Computer score is ' + computerScore + '! ');
+    rpsResults1.innerText = `\n` + playRound(playerSelection, computerSelection);
+    rpsResults1.innerText += `\n` + (`Your score is ${playerScore}! The Computer score is ${computerScore}! `);
+    round++;
+    totalRounds++;
 }
 
 function gameRecap(playerScore, computerScore){
-    let loggedPlayerScore = playerScore;
-    let loggedComputerScore = computerScore; 
-    resetScore();
-    if (loggedPlayerScore > loggedComputerScore) {
-        return ("You're the winner! Congratulations and thank you for playing!")
-    } else if (loggedComputerScore > loggedPlayerScore) {
-        return ("You lost, try again tomorrow...")
+    if (playerScore > computerScore) {
+        gamesWon++;
+        resetScore();
+        return (`Score: ${playerScore}:${computerScore} You won! Congratulations and thank you for playing!`);
+    } else if (computerScore > playerScore) {
+        gamesLost++;
+        resetScore();
+        return (`Score: ${playerScore}:${computerScore} You lost, try again tomorrow...`);
     } else {
-        return ("No ties, try again!")
+        return ("You broke it...");
     }
 }
 
-function resetScore(){
-    playerScore = 0;
-    computerScore = 0;
+function displayStats(){
+    rpsResults2.textContent = (`Rock Paper Scissors - Game: ${game}, Round: ${round}!`);
+    rpsResults3.textContent = (`Total rounds: ${totalRounds}, Games won: ${gamesWon}, Games lost: ${gamesLost}`);
 }
-
-function randomfunction(){
-for (playerScore = 0, computerScore = 0, rounds = 1; playerScore < scoreLimit && computerScore < scoreLimit; rounds++) {
-    console.log ('Rock Paper Scissors round #' + rounds + '! ');
-    game(playerSelection, computerSelection);
-    gameRecap(playerScore, computerScore);
-}};
-
-//DOM Manipulation
-
-//div rpsSetupContainer
-/*
-const rpsSetupContainer = document.querySelector("div#rpsSetupContainer");
-const rpsSetup = document.createElement('form');
-rpsSetup.setAttribute('id', 'rpsSetup');
-
-const rpsSetupLabel = document.createElement('label');
-rpsSetupLabel.setAttribute('for', 'rounds');
-rpsSetupLabel.innerText = ('Please enter the score you would like to play to:')
-
-const rpsSetupInput = document.createElement('input');
-rpsSetupInput.setAttribute('type', 'text');
-rpsSetupInput.setAttribute('id', 'rounds');
-rpsSetupInput.setAttribute('name', 'rounds');
-
-rpsSetupContainer.appendChild(rpsSetup);
-rpsSetup.appendChild(rpsSetupLabel);
-rpsSetup.appendChild(rpsSetupInput);
-*/
 
 //div rpsButtons
 const rpsButtonsContainer = document.querySelector("div#rpsButtonsContainer");
@@ -162,7 +126,13 @@ rpsButtonsRock.onclick = playRock;
 function playRock(){
     event.preventDefault();
     playerSelection = 'Rock';
-    guiGame(playerSelection, computerSelection);
+    guiPlayRound(playerSelection, computerSelection);
+    displayStats();
+    if (playerScore >= scoreLimit) {
+        rpsDisplayResults();
+    } else if (computerScore >= scoreLimit) {
+        rpsDisplayResults();
+    }
 };
 
 //Paper
@@ -174,7 +144,13 @@ rpsButtonsPaper.addEventListener('click', playPaper);
 function playPaper(){
     event.preventDefault()
     playerSelection = 'Paper';
-    guiGame(playerSelection, computerSelection);
+    guiPlayRound(playerSelection, computerSelection);
+    displayStats();
+        if (playerScore >= scoreLimit) {
+        rpsDisplayResults();
+    } else if (computerScore >= scoreLimit) {
+        rpsDisplayResults();
+    }
 };
 
 //Scissors
@@ -186,7 +162,13 @@ rpsButtonsScissors.addEventListener('click', playScissors);
 function playScissors(){
     event.preventDefault()
     playerSelection = 'Scissors';
-    guiGame(playerSelection, computerSelection);
+    guiPlayRound(playerSelection, computerSelection);
+    displayStats();
+    if (playerScore >= scoreLimit) {
+        rpsDisplayResults();
+    } else if (computerScore >= scoreLimit) {
+        rpsDisplayResults();
+    }
 };
 
 //Apply Buttons to container and apply container to html
@@ -195,23 +177,27 @@ rpsButtons.appendChild(rpsButtonsRock);
 rpsButtons.appendChild(rpsButtonsPaper);
 rpsButtons.appendChild(rpsButtonsScissors);
 
-
-
 //div rpsResultsContainer
 const rpsResultsContainer = document.querySelector("div#rpsResultsContainer");
-const rpsResults = document.createElement('p');
-rpsResults.setAttribute('id', 'rpsResults');
 
-const rpsResultsButton = document.createElement('button');
-rpsResultsButton.setAttribute('id', 'rpsResults');
-rpsResultsButton.textContent = ('Results')
-rpsResultsButton.addEventListener('click', rpsDisplayResults);
+const rpsResults1 = document.createElement('p');
+rpsResults1.setAttribute('id', 'rpsResults1');
+
+const rpsResults2 = document.createElement('p');
+rpsResults2.setAttribute('id', 'rpsResults2');
+
+const rpsResults3 = document.createElement('p');
+rpsResults3.setAttribute('id', 'rpsResults3');
 
 function rpsDisplayResults(){
-    event.preventDefault()
-    gameRecap(playerScore, computerScore);
-    rpsResults.textContent = gameRecap(playerScore, computerScore);
+    let gameRecapResults = gameRecap(playerScore, computerScore);
+    rpsResults1.textContent = gameRecapResults;
+    game++;
+    round = 0;
 };
 
-rpsResultsContainer.appendChild(rpsResults).appendChild(rpsResultsButton)
+//Apply results to container
+rpsResultsContainer.appendChild(rpsResults1);
+rpsResultsContainer.appendChild(rpsResults2);
+rpsResultsContainer.appendChild(rpsResults3);
 
