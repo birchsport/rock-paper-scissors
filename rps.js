@@ -7,9 +7,11 @@ let hands = ['Rock', 'Paper', 'Scissors'];
 let rounds;
 let scoreLimit;
 
-do{
-    scoreLimit = parseInt(prompt('Let\'s play Rock Paper Scissors! Please choose what score you want to play to! ', '5'), 10);
-}while(isNaN(scoreLimit) || scoreLimit > 1000000000 || scoreLimit < 1);
+function setScoreLimit(){
+    do{
+        scoreLimit = parseInt(prompt('Let\'s play Rock Paper Scissors! Please choose what score you want to play to! ', '5'), 10);
+    }while(isNaN(scoreLimit) || scoreLimit > 1000000000 || scoreLimit < 1);
+}
 
 //Basic Functions
 function random(upper, lower) {
@@ -92,43 +94,124 @@ function game(playerSelection, computerSelection) {
     console.log ('Your score is ' + playerScore + '! The Computer score is ' + computerScore + '! ');
 }
 
+function guiGame(playerSelection, computerSelection) {
+    computerPlay(hands);
+    computerSelection = computerPlay(hands)
+    console.log(playRound(playerSelection, computerSelection));
+    console.log ('Your score is ' + playerScore + '! The Computer score is ' + computerScore + '! ');
+}
+
 function gameRecap(playerScore, computerScore){
-    if (playerScore > computerScore) {
-        if (playerScore >= scoreLimit) {
-            console.log("You're the winner! Congratulations and thank you for playing!")
-        } else {
-        }
-    } else if (computerScore > playerScore) {
-        if (computerScore >= scoreLimit) {
-            console.log("You lost, try again tomorrow...")
-        } else {
-        }
+    let loggedPlayerScore = playerScore;
+    let loggedComputerScore = computerScore; 
+    resetScore();
+    if (loggedPlayerScore > loggedComputerScore) {
+        return ("You're the winner! Congratulations and thank you for playing!")
+    } else if (loggedComputerScore > loggedPlayerScore) {
+        return ("You lost, try again tomorrow...")
     } else {
+        return ("No ties, try again!")
     }
 }
 
+function resetScore(){
+    playerScore = 0;
+    computerScore = 0;
+}
+
+function randomfunction(){
 for (playerScore = 0, computerScore = 0, rounds = 1; playerScore < scoreLimit && computerScore < scoreLimit; rounds++) {
     console.log ('Rock Paper Scissors round #' + rounds + '! ');
     game(playerSelection, computerSelection);
     gameRecap(playerScore, computerScore);
-}
+}};
 
 //DOM Manipulation
 
-const rpsSetupContainer = document.querySelector(".rpsSetupContainer");
+//div rpsSetupContainer
+/*
+const rpsSetupContainer = document.querySelector("div#rpsSetupContainer");
 const rpsSetup = document.createElement('form');
 rpsSetup.setAttribute('id', 'rpsSetup');
 
 const rpsSetupLabel = document.createElement('label');
 rpsSetupLabel.setAttribute('for', 'rounds');
-rpsSetupLabel.textContent('Please enter the score you would like to play to.')
+rpsSetupLabel.innerText = ('Please enter the score you would like to play to:')
 
 const rpsSetupInput = document.createElement('input');
 rpsSetupInput.setAttribute('type', 'text');
 rpsSetupInput.setAttribute('id', 'rounds');
 rpsSetupInput.setAttribute('name', 'rounds');
-rpsSetupInput.setAttribute('value', '5');
 
 rpsSetupContainer.appendChild(rpsSetup);
 rpsSetup.appendChild(rpsSetupLabel);
 rpsSetup.appendChild(rpsSetupInput);
+*/
+
+//div rpsButtons
+const rpsButtonsContainer = document.querySelector("div#rpsButtonsContainer");
+const rpsButtons = document.createElement('form');
+rpsButtons.setAttribute('id', 'rpsButtons');
+
+//rock
+const rpsButtonsRock = document.createElement('button');
+rpsButtonsRock.setAttribute('id', 'rock');
+rpsButtonsRock.textContent = ('Rock')
+rpsButtonsRock.onclick = playRock;
+
+function playRock(){
+    event.preventDefault();
+    playerSelection = 'Rock';
+    guiGame(playerSelection, computerSelection);
+};
+
+//Paper
+const rpsButtonsPaper = document.createElement('button');
+rpsButtonsPaper.setAttribute('id', 'paper');
+rpsButtonsPaper.textContent = ('Paper')
+rpsButtonsPaper.addEventListener('click', playPaper);
+
+function playPaper(){
+    event.preventDefault()
+    playerSelection = 'Paper';
+    guiGame(playerSelection, computerSelection);
+};
+
+//Scissors
+const rpsButtonsScissors = document.createElement('button');
+rpsButtonsScissors.setAttribute('id', 'scissors');
+rpsButtonsScissors.textContent = ('Scissors')
+rpsButtonsScissors.addEventListener('click', playScissors);
+
+function playScissors(){
+    event.preventDefault()
+    playerSelection = 'Scissors';
+    guiGame(playerSelection, computerSelection);
+};
+
+//Apply Buttons to container and apply container to html
+rpsButtonsContainer.appendChild(rpsButtons);
+rpsButtons.appendChild(rpsButtonsRock);
+rpsButtons.appendChild(rpsButtonsPaper);
+rpsButtons.appendChild(rpsButtonsScissors);
+
+
+
+//div rpsResultsContainer
+const rpsResultsContainer = document.querySelector("div#rpsResultsContainer");
+const rpsResults = document.createElement('p');
+rpsResults.setAttribute('id', 'rpsResults');
+
+const rpsResultsButton = document.createElement('button');
+rpsResultsButton.setAttribute('id', 'rpsResults');
+rpsResultsButton.textContent = ('Results')
+rpsResultsButton.addEventListener('click', rpsDisplayResults);
+
+function rpsDisplayResults(){
+    event.preventDefault()
+    gameRecap(playerScore, computerScore);
+    rpsResults.textContent = gameRecap(playerScore, computerScore);
+};
+
+rpsResultsContainer.appendChild(rpsResults).appendChild(rpsResultsButton)
+
