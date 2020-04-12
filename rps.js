@@ -113,3 +113,22 @@ for (playerScore = 0, computerScore = 0, rounds = 1; playerScore < scoreLimit &&
     gameRecap(playerScore, computerScore);
 }
 
+//DOM Manipulation
+
+const rpsSetupContainer = document.querySelector(".rpsSetupContainer");
+const rpsSetup = document.createElement('form');
+rpsSetup.setAttribute('id', 'rpsSetup');
+
+const rpsSetupLabel = document.createElement('label');
+rpsSetupLabel.setAttribute('for', 'rounds');
+rpsSetupLabel.textContent('Please enter the score you would like to play to.')
+
+const rpsSetupInput = document.createElement('input');
+rpsSetupInput.setAttribute('type', 'text');
+rpsSetupInput.setAttribute('id', 'rounds');
+rpsSetupInput.setAttribute('name', 'rounds');
+rpsSetupInput.setAttribute('value', '5');
+
+rpsSetupContainer.appendChild(rpsSetup);
+rpsSetup.appendChild(rpsSetupLabel);
+rpsSetup.appendChild(rpsSetupInput);
