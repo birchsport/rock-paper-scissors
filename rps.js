@@ -37,6 +37,7 @@ function play(playerHand) {
     if (playerHand === 'Rock') {
         let playerSelection = 'Rock';
         console.log('You threw ' + playerSelection + '!');
+        //TODO stuff
     } else if (playerHand === 'Paper'){
         let playerSelection = 'Paper';
         console.log('You threw ' + playerSelection + '!');
